@@ -1,0 +1,21 @@
+myo-order-details-container
+
+myo-order-details-buyer-address
+
+
+myo-order-details-product-sku
+myo-order-details-product-asin
+myo-order-details-product-listingId
+myo-order-details-product-orderitem-id
+
+myo-order-details-order-grand-total
+
+
+
+ACCESS-KEY-ID: AKIAJZAPJELR5WKTA45Q
+SECRET-ACCESS-KEY: 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
+MERCHANTID/SELLERID: A1PVJENL0IJHJ4
+MARKETPLACEID: ATVPDKIKX0DER
+MWSAUTHTOKEN: amzn.mws.f6a8b748-472d-0404-1626-a19423e80e7a
+
+pubnub.com/developers
