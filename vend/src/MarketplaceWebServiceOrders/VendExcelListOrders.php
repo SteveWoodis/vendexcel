@@ -311,17 +311,58 @@ function invokeListOrderItemsByNextToken(MarketplaceWebServiceOrders_Interface $
                 {
                     $payload .= ",";
                 }
-              
-              . $order->getShippingAddress()->getAddressLine3() . ","
-              . $order->getShippingAddress()->getCity() . ","
-              . $order->getShippingAddress()->getCounty() . ","
-              . $order->getShippingAddress()->getDistrict() . ","
-              . $order->getShippingAddress()->getStateOrRegion() . ","
-              . $order->getShippingAddress()->getPostalCode() . ","
-              . $order->getShippingAddress()->getCountryCode() . ","
-              . $order->getShippingAddress()->getPhone() . ","
-              . $order->getOrderTotal()->getAmount() . ","
-              . $order->getNumberOfItemsShipped() . ","
+
+                if($order->getShippingAddress()->getAddressLine3()){
+                    $payload .= $order->getShippingAddress()->getAddressLine3() . ",";
+                }else
+                {
+                    $payload .= ",";
+                }
+                if($order->getShippingAddress()->getCity()){
+                    $payload .= $order->getShippingAddress()->getCity() . ",";
+               }else{
+                    $payload .= ",";
+                    }
+                if($order->getShippingAddress()->getCounty()){
+                    $payload .= $order->getShippingAddress()->getCounty() . ",";
+                 }else
+                 {
+                    $payload .= ",";
+                 }
+                if($order->getShippingAddress()->getDistrict()){
+                    $payload .= $order->getShippingAddress()->getDistrict() . ",";
+                }else
+                {
+                    $payload .= ",";
+                }
+                if($order->getShippingAddress()->getStateOrRegion()){
+                    $payload .= $order->getShippingAddress()->getStateOrRegion() . ",";
+                 }else
+                 {
+                    $payload .= ",";
+                 }
+                if($order->getShippingAddress()->getPostalCode()){
+                    $payload .= $order->getShippingAddress()->getPostalCode() . ",";
+                }else
+                {
+                    $payload .= ",";
+                }
+
+                if($order->getShippingAddress()->getCountryCode()){
+                    $payload .= $order->getShippingAddress()->getCountryCode() . ",";
+                }
+              if($order->getShippingAddress()->getPhone()){
+                    $payload .= $order->getShippingAddress()->getPhone() . ",";
+              }else
+              {
+                    $payload .= ",";
+              }
+                if($order->getOrderTotal()->getAmount()){
+                    $payload .= $order->getOrderTotal()->getAmount() . ",";
+                }else{
+                    $payload .= ",";
+                }
+                $payload .= $order->getNumberOfItemsShipped() . ","
               . $order->getNumberofItemsUnshipped() . ",";
 
               if ($order->getPaymentExecutionDetail()){
@@ -379,6 +420,9 @@ function invokeListOrderItemsByNextToken(MarketplaceWebServiceOrders_Interface $
 
                if($orderItem->getPromotionIds()){
                     $payload .= $orderItem->getPromotionIds() . ".";
+               }else
+               {
+                    $payload .= ",";
                }
 
               $payload .= $orderItem->getCODFee() . ","
