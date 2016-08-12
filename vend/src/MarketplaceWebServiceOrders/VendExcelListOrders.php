@@ -453,7 +453,7 @@ function invokeListOrderItemsByNextToken(MarketplaceWebServiceOrders_Interface $
               fclose($fo);
               sleep(30);
               echo("Order: ".$order->getAmazonOrderId()." OrderItem: ".$orderItem->getTitle()."\n");
-              echo("Number Of Items: " . $order->getNumberOfItemsShipped() . "\n");
+
 
           }
     }
