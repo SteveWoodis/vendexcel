@@ -101,8 +101,6 @@ function invokeListOrders(MarketplaceWebServiceOrders_Interface $service, $reque
 function processOrders($orders){
     foreach ($orders as $order) {
         $orderId = $order->getAmazonOrderId();
-        /* Set Address here? */
-        
         $request = new MarketplaceWebServiceOrders_Model_ListOrderItemsRequest();
         $request->setSellerId(MERCHANT_ID);
         $request->setAmazonOrderId($orderId);
@@ -111,10 +109,11 @@ function processOrders($orders){
     }
 }
 
+
 function invokeListOrderItems(MarketplaceWebServiceOrders_Interface $service, $request, $order){
     try{
         $response = $service->ListOrderItems($request);
-        $result = $response->getListOrderItemsResult();
+		$result = $response->getListOrderItemsResult();
         $orderItems = $result->getOrderItems();
         writeOrderItemsToDisk($orderItems, $order);
 
@@ -144,8 +143,6 @@ function listOrderItemsWithNextToken($nextToken, $order){
     invokeListOrderItemsByNextToken(setupService, $request, $order);
 }
 
-
-
 function invokelistOrdersByNextToken(MarketplaceWebServiceOrders_Interface $service, $request){
 
         try {
@@ -168,15 +165,6 @@ function invokelistOrdersByNextToken(MarketplaceWebServiceOrders_Interface $serv
 
 
 
-function getAddress(MarketplaceWebServiceOrders_Model_Address $service)
-  {
-       $oAddress = $service->getName();
-       $oAddress = $service->getAddressLine1();
-       $oAddress = $service->getAddressLine2();
-
-
-  }
-
 function invokeListOrderItemsByNextToken(MarketplaceWebServiceOrders_Interface $service, $request, $order)
    {
        try {
@@ -197,6 +185,7 @@ function invokeListOrderItemsByNextToken(MarketplaceWebServiceOrders_Interface $
       }
   }
 
+
   function showException($ex) {
       echo("Caught Exception: " . $ex->getMessage() . "\n");
       echo("Response Status Code: " . $ex->getStatusCode() . "\n");
@@ -211,21 +200,216 @@ function invokeListOrderItemsByNextToken(MarketplaceWebServiceOrders_Interface $
 
   function writeFileHeading(){
             $fo = fopen('c:\wamp64\www\vendexcel.csv', 'a+');
-            fwrite($fo, "AmazonOrderId" . "," ."SellerOrderId" . "," ."PurchaseDate" . "," ."LastUpdateDate" . "," ."OrderStatus" . "," ."FulfillmentChannel" . "," ."SalesChannel" . "," ."OrderChannel" . "," ."ShipServiceLevel" . "," ."ShippingAddress" . "," ."OrderTotal" . "," ."NumberOfItemsShipped" . "," ."NumberOfItemsUnshipped" . "," ."PaymentExecutionDetail" . "," ."PaymentMethod" . "," ."MarketplaceId" . "," ."BuyerEmail" . "," ."BuyerName" . "," ."ShipmentServiceLevelCategory" . "," ."ShippedByAmazonTFM" . "," ."TFMShipmentStatus" . "," ."CbaDisplayableShippingLabel" . "," ."OrderType" . "," ."EarliestShipDate" . "," ."LatestShipDate" . "," ."EarliestDeliveryDate" . "," ."LatestDeliveryDate" . "," ."IsBusinessOrder" . "," ."PurchaseOrderNumber" . "," ."IsPrime" . "," ."IsPremiumOrder" . "," . "ASIN" . "," . "SellerSKU" . "," . "OrderItemId" . "," . "Title" . "," . "QuantityOrdered" . "," . "QuantityShipped" . "," . "PointsGranted" . "," . "ItemPrice" . "," . "ShippingPrice" . "," . "GiftWrapPrice" . "," . "ItemTax" . "," . "ShippingTax" . "," . "GiftWrapTax" . "," . "ShippingDiscount" . "," . "PromotionDiscount" . "," . "PromotionIds" . "," . "CODFee" . "," . "CODFeeDiscount" . "," . "GiftMessageText" . "," . "GiftWrapLevel" . "InvoiceData" . "," . "ConditionNote" . "," . "ConditionId" . "," . "ConditionSubtypeId" . "ScheduledDeliveryStartDate" . "," . "ScheduledDeliveryEndDate" . "," . "PriceDesignation" . "," . "BuyerCustomizedInfo" . "\n");
+            fwrite($fo, "Amazon Order Id" . ","
+            ."Seller Order Id" . ","
+            ."Purchase Date" . ","
+            ."Last Update Date" . ","
+            ."Order Status" . ","
+            ."Fulfillment Channel" . ","
+            ."Sales Channel" . ","
+            ."Order Channel" . ","
+            ."Ship Service Level" . ","
+            ."Name" . ","
+            ."Address Line 1" . ","
+            ."Address Line 2" . ","
+            ."Address Line 3" . ","
+            ."City" . ","
+            ."County" . ","
+            ."District" . ","
+            ."State Or Region" . ","
+            ."Postal Code" . ","
+            ."Country Code". ","
+            ."Phone" . ","
+            ."Order Total" . ","
+            ."Number Of Items Shipped" . ","
+            ."Number Of Items Unshipped" . ","
+            ."Payment Execution Detail" . ","
+            ."Payment Method" . ","
+            ."Marketplace Id" . ","
+            ."Buyer Email" . ","
+            ."Buyer Name" . ","
+            ."Shipment Service Level Category" . ","
+            ."Shipped By Amazon TFM" . ","
+            ."TFM Shipment Status" . ","
+            ."Cba Displayable Shipping Label" . ","
+            ."Order Type" . ","
+            ."Earliest Ship Date" . ","
+            ."Latest Ship Date" . ","
+            ."Earliest Delivery Date" . ","
+            ."Latest Delivery Date" . ","
+            ."Is Business Order" . ","
+            ."Purchase Order Number" . ","
+            ."Is Prime" . ","
+            ."Is Premium Order" . ","
+            . "ASIN" . ","
+            . "Seller SKU" . ","
+            . "Order Item Id" . ","
+            . "Title" . ","
+            . "Quantity Ordered" . ","
+            . "Quantity Shipped" . ","
+            . "Points Granted" . ","
+            . "Points Granted Amount" . ","
+            . "Points Granted Monetary Value"
+            . "Item Price" . ","
+            . "Shipping Price" . ","
+            . "GiftWrap Price" . ","
+            . "Item Tax" . ","
+            . "Shipping Tax" . ","
+            . "GiftWrap Tax" . ","
+            . "Shipping Discount" . ","
+            . "Promotion Discount" . ","
+            . "Promotion Ids" . ","
+            . "COD Fee" . ","
+            . "COD Fee Discount" . ","
+            . "Gift Message Text" . ","
+            . "GiftWrap Level" . ","
+            . "Invoice Requirement" . ","
+            . "Buyer Selected Inventory Category" . ","
+            . "Invoice Title" . ","
+            . "Invoice Information" . ","
+            . "Condition Note" . ","
+            . "Condition Id" . ","
+            . "Condition Subtype Id" . ","
+            . "Scheduled Delivery Start Date" . ","
+            . "Scheduled Delivery End Date" . ","
+            . "Price Designation" . ","
+            . "Buyer Customized Info" . "\n");
             fclose($fo);
    }
 
   function writeOrderItemsToDisk($orderItems, $order) {
-        foreach ($orderItems as $orderItem) {
-            //$oAddress = new MarketplaceWebServiceOrders_Model_Address($order);
-            //echo("THe address: " . $oAddress->getName() . "\n");
-            $fo = fopen('c:\wamp64\www\vendexcel.csv', 'a+');
-            fwrite($fo, $order->getAmazonOrderId() . " , " . $order->getSellerOrderId() . "," . $order->getPurchaseDate() . "," . $order->getLastUpdateDate() . "," . $order->getOrderStatus() . "," . $order->getFulfillmentChannel() . "," . $order->getSalesChannel() . "," . $order->getOrderChannel() . "," . $order->getShipServiceLevel() . "," . "Shipping Address" . "," . "Order Total" . "," . $order->getNumberOfItemsShipped() . "," . $order->getNumberofItemsUnshipped() . "," . $order->getPaymentExecutionDetail() . "," . $order->getPaymentMethod() . "," . $order->getMarketplaceId() . "," . $order->getBuyerEmail() . "," . $order->getBuyerName() . "," . $order->getShipmentServiceLevelCategory() . "," . $order->getShippedByAmazonTFM() . "," . $order->getTFMShipmentStatus() . "," . $order->getCbaDisplayableShippingLabel() . "," . $order->getOrderType() . "," . $order->getEarliestShipDate() . "," . $order->getLatestShipDate() . "," . $order->getEarliestDeliveryDate() . "," . $order->getLatestDeliveryDate() . "," . $order->getIsBusinessOrder() . "," . $order->getPurchaseOrderNumber() . "," . $order->getIsPrime() . "," . $order->getIsPremiumOrder() . "," . $orderItem->getASIN() . "," . $orderItem->getSellerSKU() . "," . $orderItem->getOrderItemId() . "," . $orderItem->getTitle() . "," . $orderItem->getQuantityOrdered()-> . "," . $orderItem->getQuantityShipped() . "," . "\n");
-            fclose($fo);
-            sleep(30);
-            echo("Order: ".$order->getAmazonOrderId()." OrderItem: ".$orderItem->getTitle()."\n");
-            echo("Number Of Items: " . $order->getNumberOfItemsShipped() . "\n");
-            //echo("Shipping Address: " . $order->ShippingAddress->Name(0) . "\n");
-            //echo("Var dump" . var_dump($order) . "\n");
-        }
-  }
+          foreach ($orderItems as $orderItem) {
+
+              $payload = $order->getAmazonOrderId() . " , "
+              . $order->getSellerOrderId() . ","
+              . $order->getPurchaseDate() . ","
+              . $order->getLastUpdateDate() . ","
+              . $order->getOrderStatus() . ","
+              . $order->getFulfillmentChannel() . ","
+              . $order->getSalesChannel() . ","
+              . $order->getOrderChannel() . ","
+              . $order->getShipServiceLevel() . ",";
+
+               if($order->getShippingAddress()->getName())
+                {
+                    $payload .= $order->getShippingAddress()->getName() . ",";
+                }else
+                {
+                    $payload .= ",";
+                }
+                if($order->getShippingAddress()->getAddressLine1())
+                {
+                    $payload .= $order->getShippingAddress()->getAddressLine1() . ",";
+                }else
+                {
+                    $payload .= ",";
+                }
+                if($order->getShippingAddress()->getAddressLine2())
+                {
+                    $payload .= $order->getShippingAddress()->getAddressLine2() . ",";
+                }else
+                {
+                    $payload .= ",";
+                }
+              
+              . $order->getShippingAddress()->getAddressLine3() . ","
+              . $order->getShippingAddress()->getCity() . ","
+              . $order->getShippingAddress()->getCounty() . ","
+              . $order->getShippingAddress()->getDistrict() . ","
+              . $order->getShippingAddress()->getStateOrRegion() . ","
+              . $order->getShippingAddress()->getPostalCode() . ","
+              . $order->getShippingAddress()->getCountryCode() . ","
+              . $order->getShippingAddress()->getPhone() . ","
+              . $order->getOrderTotal()->getAmount() . ","
+              . $order->getNumberOfItemsShipped() . ","
+              . $order->getNumberofItemsUnshipped() . ",";
+
+              if ($order->getPaymentExecutionDetail()){
+                 $payload .= $order->getPaymentExecutionDetail()->getPayment() . ","
+               . $payload .= $order->getPaymentExecutionDetail()->getPaymentMethod() . ",";
+              }else
+              {
+                    $payload .= ",";
+              }
+              $payload .= $order->getPaymentMethod() . ","
+              . $order->getMarketplaceId() . ","
+              . $order->getBuyerEmail() . ","
+              . $order->getBuyerName() . ","
+              . $order->getShipmentServiceLevelCategory() . ","
+              . $order->getShippedByAmazonTFM() . ","
+              . $order->getTFMShipmentStatus() . ","
+              . $order->getCbaDisplayableShippingLabel() . ","
+              . $order->getOrderType() . ","
+              . $order->getEarliestShipDate() . ","
+              . $order->getLatestShipDate() . ","
+              . $order->getEarliestDeliveryDate() . ","
+              . $order->getLatestDeliveryDate() . ","
+              . $order->getIsBusinessOrder() . ","
+              . $order->getPurchaseOrderNumber() . ","
+              . $order->getIsPrime() . ","
+              . $order->getIsPremiumOrder() . ","
+              . $orderItem->getASIN() . ","
+              . $orderItem->getSellerSKU() . ","
+              . $orderItem->getOrderItemId() . ","
+              . $orderItem->getTitle() . ","
+              . $orderItem->getQuantityOrdered() . ","
+              . $orderItem->getQuantityShipped() . ","
+              . $orderItem->getPointsGranted() . ","
+              . $orderItem->getPointsGranted() . ",";
+              if($orderItem->getItemPrice()->getAmount()){
+                $payload .= $orderItem->getItemPrice()->getAmount() . ",";
+              }else
+              {
+                $payload .= ",";
+              }
+              /*if($orderItem->getShippingPrice()->getAmount()){
+                              $payload .= $orderItem->getShippingPrice()->getAmount() . ",";
+                            }else
+                            {
+                              $payload .= ",";
+                            }
+
+*/
+              $payload .= $orderItem->getGiftWrapPrice() . ","
+              . $orderItem->getItemTax()->getAmount() . ","
+             /* . $orderItem->getShippingTax()->getAmount() . "."*/
+              . $orderItem->getGiftWrapTax() . ","
+             /* . $orderItem->getShippingDiscount()->getAmount() . ","*/
+              . $orderItem->getPromotionDiscount()->getAmount() . ",";
+
+               if($orderItem->getPromotionIds()){
+                    $payload .= $orderItem->getPromotionIds() . ".";
+               }
+
+              $payload .= $orderItem->getCODFee() . ","
+              . $orderItem->getCODFeeDiscount() . ","
+              . $orderItem->getGiftMessageText() . "."
+              . $orderItem->getGiftWrapLevel() . ",";
+
+
+              if ($orderItem->getInvoiceData()) {
+                  $payload .= $orderItem->getInvoiceData()->getInvoiceRequirement() . ","
+              . $orderItem->getInvoiceData()->getBuyerSelectedInvoiceCategory() . ","
+              . $orderItem->getInvoiceData()->getInvoiceTitle() . ","
+              . $orderItem->getInvoiceData()->getInvoiceInformation() . ",";
+              } else {
+                  $payload .= ",,,,";
+              }
+              $payload .= $orderItem->getConditionNote() . ","
+              . $orderItem->getConditionId() . ","
+              . $orderItem->getConditionSubtypeId() . ","
+              . $orderItem->getScheduledDeliveryStartDate() . ","
+              . $orderItem->getScheduledDeliveryEndDate() . "."
+              . $orderItem->getPriceDesignation() . "."
+              . $orderItem->getBuyerCustomizedInfo() . ","
+              . "\n";
+
+              $fo = fopen('c:\wamp64\www\vendexcel.csv', 'a+');
+              fwrite($fo, $payload);
+              fclose($fo);
+              sleep(30);
+              echo("Order: ".$order->getAmazonOrderId()." OrderItem: ".$orderItem->getTitle()."\n");
+              echo("Number Of Items: " . $order->getNumberOfItemsShipped() . "\n");
+
+          }
+    }
